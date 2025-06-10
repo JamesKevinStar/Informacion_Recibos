@@ -36,7 +36,7 @@ Este proyecto analiza la información de recibos en formato PDF, para luego usar
 - Con los datos almacenados en la Base de Datos, cargué la información en un Power BI.
 - Se editaron algunos datos para hacer los gráficos de manera más fácil.
 
-![Power BI](Img_ReadMe/PBI.png)
+![Power BI](ImgReadMe/PBI.png)
 
 ## Resultados
 - Se logró obtener la información de la mayoría de los PDF's sin problemas.
