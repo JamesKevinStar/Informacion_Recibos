@@ -8,7 +8,7 @@ Este proyecto analiza la información de recibos en formato PDF, para luego usar
 - [Datos](#datos)
 - [Procedimiento](#metodología)
 - [Resultados](#resultados)
-- [Conclusión](#Conclusión)
+- [Conclusiones](#Conclusiones)
 
 ## Datos 
 - El dataset utilizado proviene de la página Kaggle, el dataser se llama [my receipts (pdf scans)]([https://archive.ics.uci.edu/dataset/502/online+retail+ii](https://www.kaggle.com/datasets/jenswalter/receipts)).
@@ -42,6 +42,6 @@ Este proyecto analiza la información de recibos en formato PDF, para luego usar
 - Se logró obtener la información de la mayoría de los PDF's sin problemas.
 - También se pudo realizar una Dashboard decente que muestre los gastos de la persona/empresa que se realizaron en el año 2018.
 
-## Conclusión 
+## Conclusiones
 - Los tiempos que se tomaron para procesar 1 sola imagen me tomaron en promedio entre 3 a 10 min aprox., si se tieme una GPU mejor los tiempos se pueden reducir, este también fue la razon por la que decidí trabajar solo con los PDF's del 2018 y no con todos los del dataset.
 - Puede que con un mejor prompt y más corto de mejores resultados, sería cuestión de probar.
