@@ -1,73 +1,47 @@
 # Extracción de Información de Recibos
 
 ## Descripción:
-Este proyecto analiza los datos de compras de clientes en una tienda minoristas con sede en UK, con el objetivo de identificar diferentes grupos de clientes y planificar distintas estrategias dependiendo del comportamiento del cliente. 
+Este proyecto analiza la información de recibos en formato PDF, para luego usar la información valiosa en generar un reporte en Power BI. 
 
 
 ## Tabla de Contenidos 
 - [Datos](#datos)
-- [Metodología](#metodología)
+- [Procedimiento](#metodología)
 - [Resultados](#resultados)
-- [Conclusión](#conclusión)
+- [Conclusión](#Conclusión)
 
 ## Datos 
-- El dataset utilizado proviene de la página "UC Irvine Machine Learning Repository", el dataser se llama [Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii), que es del año 2019.
-- Las fechas de los datos están comprendidas entre 01/12/2009 y 09/12/2011, las cuales están divididas en 2 hojas de excel.
-- Para este problema solo se agarraron los datos de la primera hoja, que son hasta el año 2010.
+- El dataset utilizado proviene de la página Kaggle, el dataser se llama [my receipts (pdf scans)]([https://archive.ics.uci.edu/dataset/502/online+retail+ii](https://www.kaggle.com/datasets/jenswalter/receipts)).
+- El datase tiene desde el año 2017 hasta el 2024, pero para este caso solo trabajé con los correspondientes al 2018.
 
-![Dataset](Imágenes/Dataset.png)
+## Procedimiento
 
-## Metodología 
+### 1. Recorrer todo los Archivos. 
+- La primera parte se realizó un recorrido por cada una de las imágenes del dataset.
+- Se guarda la ruta, país y tipo de transacción en variables.
 
-### 1. Exploración de Datos 
-- Se realizó una exploración inicial del dataset a cada parámetro.
-- Se identificó los valores nulos o que no podrían aportar nada de valor.
+### 2. Funciones para el Procesamiento de Información.
+- Cada una de las imágenes se envió a una función para extraer el texto de la imagen, se usó la librería PyMuPDF, en concreto el módulo "fitz".
+- Después se envía el texto extraido a una función para analizar el texto, se usó el LLM DeepSeek para el procesamiento de la información y que extraiga datos especificados en un determinado formato.
+- Con esa respuesta se envió a otro LLM para que evalue si la respuesta enviada es correcta o no.
 
-### 2. Limpieza de Datos 
-- Se realizó la eliminación de registros previamente determinados como inútiles.
-- Se eliminaron 118414 registros, lo que representa el 22.54% del total de registros.
+### 3. Guardado de Información
+- Una vez que se determine que el resultado coincide con la información del PDF se envia a otra función para convertirlo en un dataframe.
+- Si no coincide la información y ya hizo una cantidad de intentos, se almacena la ruta del PDF a una lista para informar que esos PDF's no se puideron evaluar de manera satisfactoria.
 
-### 3. Reducción de Dimensionalidad 
-- De los datos limpios, se decidió crear un nuevo dataframe con nuevas columnas que aporten más información:
-  - **Customer ID**: Identificación del cliente.
-  - **Monetary Value**: Suma del total de compras pertenecientes al cliente. 
-  - **Frequency**: Número de facturas únicas del cliente.
-  - **Recency**: Días desde la última compra.
+### 4. Almacenarlo en un DB 
+- Una vez se recorrió todos los PDF's, el dataframe resultante con toda la información se convierte y almacena en una base de datos, en este caso usé SQLite.
 
-- Se graficaron algunos diagramas para visualizar de mejor manera los nuevos registros.
- 
-![Gráfico de Barras](Imágenes/Gráfico_Barras.png)
+### 5. Informe Power BI 
+- Con los datos almacenados en la Base de Datos, cargué la información en un Power BI.
+- Se editaron algunos datos para hacer los gráficos de manera más fácil.
 
-![Gráfico de Cajas](Imágenes/Gráfico_Cajas.png)
+![Power BI](Img_ReadMe/PBI.png)
 
-- Se visualizaba que habían muchos datos atípicos en los parámetros creados.
-- Se eliminó los registros atípicos, en lo que dio como resultado:
-
-![Gráfico de Cajas Limpios](Imágenes/Gráfico_Cajas_No_Atípicos.png)
-
-![Gráfico 3D de Dispersión de los Datos](Imágenes/Gráfico_Dispersión.png)
-
-### 4. Normalización de Datos 
-- Se aplicó la "Normalización Z-Score" para estandarizar las variables y que no afencten mucho en el algoritmo KMeans.
-
-### 5. Implementación de Algoritmo KMeans 
-- Se utilizó el algoritmo KMeans para agrupar a los clientes en diferentes clusters.
-- Primero se iteró con muchos valores de "k" para determinar cuál valor es la mejor opción a elegir.
-- Se utilizó el "Coeficiente de Silueta" para determinar de mejor manera el valor de "k".
-- Al final de visualizó los datos con sus respectivos clusters.
-
-![Clusters Creados](Imágenes/Clusters.png)
-
-### 6. Análisis de los Grupos 
-- Para finalizar se interpretó o dio un significado a los clusters creados.
-- Se utilizó el "Gráfico de Violín" para determinar de mejor manera el comportamiento de los clientes en cada cluster.
-
-![Grupos](Imágenes/Grupos.png)
-
-## Resultados 
-- Se identificó los patrones de comportamiento de compra de los clientes.
-- Se clasificó a los clientes en diferentes grupos según su valor monetario, frecuencia de compra y recencia.
-- También se determinó qué acciones realizar para cada grupo de clientes.
+## Resultados
+- Se logró obtener la información de la mayoría de los PDF's sin problemas.
+- También se pudo realizar una Dashboard decente que muestre los gastos de la persona/empresa que se realizaron en el año 2018.
 
 ## Conclusión 
-El análisis de datos permitió clasificar a los clientes en grupos distintos, lo cual puede ayudar a diseñar diferentes estrategias para atraer o mantener a los clientes.  
+- Los tiempos que se tomaron para procesar 1 sola imagen me tomaron en promedio entre 3 a 10 min aprox., si se tieme una GPU mejor los tiempos se pueden reducir, este también fue la razon por la que decidí trabajar solo con los PDF's del 2018 y no con todos los del dataset.
+- Puede que con un mejor prompt y más corto de mejores resultados, sería cuestión de probar.
