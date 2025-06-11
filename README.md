@@ -27,10 +27,10 @@ Este proyecto analiza la información de recibos en formato PDF, para luego usar
 
 ### 3. Guardado de Información
 - Una vez que se determine que el resultado coincide con la información del PDF se envia a otra función para convertirlo en un dataframe.
-- Si no coincide la información y ya hizo una cantidad de intentos, se almacena la ruta del PDF a una lista para informar que esos PDF's no se puideron evaluar de manera satisfactoria.
+- Si no coincide la información y ya hizo una cantidad de intentos, se almacena la ruta del PDF a una lista para informar que esos PDFs no se puideron evaluar de manera satisfactoria.
 
 ### 4. Almacenarlo en un DB 
-- Una vez se recorrió todos los PDF's, el dataframe resultante con toda la información se convierte y almacena en una base de datos, en este caso usé SQLite.
+- Una vez se recorrió todos los PDFs, el dataframe resultante con toda la información se convierte y almacena en una base de datos, en este caso usé SQLite.
 
 ### 5. Informe Power BI 
 - Con los datos almacenados en la Base de Datos, cargué la información en un Power BI.
@@ -39,7 +39,7 @@ Este proyecto analiza la información de recibos en formato PDF, para luego usar
 ![Power BI](ImgReadMe/PBI.png)
 
 ## Resultados
-- Se logró obtener la información de la mayoría de los PDF's sin problemas.
+- Se logró obtener la información de la mayoría de los PDFs sin problemas.
 - También se pudo realizar una Dashboard decente que muestre los gastos de la persona/empresa que se realizaron en el año 2018.
 
 ## Conclusiones
