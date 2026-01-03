@@ -8,7 +8,7 @@ os.environ["OLLAMA_USE_GPU"] = "1"
 df = pd.DataFrame(columns = ["empresa", "fecha", "conceptos", "importe", "moneda", "pais", "servicio", "valor USD"])
 pdf_errores = []
 # Diccionario de conversión de moneda a dólares del año 2018
-tasa_cambio = {"dolar estadounidense": 1, "dolar canadiense": 0.7717, "euro": 1.1793, "yuan chino": 0.1514}
+tasa_cambio = {"dolar estadounidense": 1, "dolar canadiense": 0.7717, "euro": 1.1793, "yuan chino": 0.1513}
 
 # Recorrer los recibos por país
 for pais in sorted(os.listdir(".\Imágenes")):
@@ -73,5 +73,6 @@ engine = create_engine("sqlite:///Código/recibos.db")
 # Agregar nuevos datos al archivo existente
 # Cambiar 'replace' por 'append' para agregar a la db
 df.to_sql("recibos", engine, if_exists = "replace", index = False)
+
 
 engine.dispose()
